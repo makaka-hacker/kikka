@@ -1,6 +1,9 @@
 # kikka
 hikvision 
 
+http://www.hikvision.msk.ru/forum/26-3729-1 - описание
+
+
 Залить ip диапазоны в scan.txt
 
 
