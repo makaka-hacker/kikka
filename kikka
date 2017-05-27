@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+
 function load(){
 # $1 - url , $2 - path 
 return $(wget -O "$2" --tries=1 --timeout 5 "http://$1/Streaming/channels/1/picture/?auth=YWRtaW46") 
@@ -86,7 +87,6 @@ mkdir "rec_$2"
 while true
 do
 load "$2" "rec_$2/$(date +%s).jpg"
-C_INC=$((C_INC+1))
 done
 ;;
 
