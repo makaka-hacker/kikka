@@ -29,7 +29,7 @@ sudo masscan -p$1 -iL "$scan_path" --rate=2000 | grep -Eo "([0-9]{1,3}[\.]){3}[0
 
 
 function brute(){
-a
+
 source_ip="res.txt"
  if test -n "$1"     
 then
@@ -89,7 +89,7 @@ echo "Done - total: $c_ret"
 #### capture stream
 "rec" )
 echo "$2 -> rec_$2"
-trap "echo EXIT; exit" SIGINT
+#trap "echo EXIT; exit" SIGINT   // ToDO Gif
 mkdir "rec_$2"
 while true
 do
