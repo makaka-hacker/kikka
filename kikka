@@ -9,31 +9,34 @@ return $(wget -O "$2" --tries=1 --timeout 5 "http://$1/Streaming/channels/1/pict
 
 function scan(){
 
-#$1 - ranges,  $2 - result file
+# $1 port, $2 - ranges,  $3 - result file
+
 scan_path="hosts"
 res_path="res.txt"
- if test -n "$1"      
+
+ if test -n "$2"      
 then
-	scan_path="$1"
+	scan_path="$2"
  fi
 
-if test -n "$2"     
+if test -n "$3"     
 then
-	res_path="$2"
+	res_path="$3"
  fi
-sudo masscan -p8000 -iL "$scan_path" --rate=2000 | grep -Eo "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > "$res_path"
+
+sudo masscan -p$1 -iL "$scan_path" --rate=2000 | grep -Eo "([0-9]{1,3}[\.]){3}[0-9]{1,3}" > "$res_path"
 }
 
 
 function brute(){
-
+a
 source_ip="res.txt"
  if test -n "$1"     
 then
 	source_ip="$1"
  fi
 
-goods=good_$(date +%T)
+goods=$(date +%H-%M-%S)
 mkdir "$goods"
 INC=0
 while read line
@@ -45,7 +48,7 @@ else
 	rm "$goods/$line.jpg"
 fi
 done < "$source_ip"
-return "$INC"
+return $INC
 }
 
 
@@ -59,7 +62,7 @@ case "$1" in
 ### scan
 "scan" )
 echo "scaning"
-scan $2 $3
+scan $2 $3 $4
 ;;
 
 
@@ -73,9 +76,13 @@ brute $2
 #### main code
 "" | "start" )
 echo "main"
-scan $2
-mv=$(brute) 
-echo "Done - total: $mv"
+scan 8000 $2 temp_res.txt
+scan 80 temp_res.txt 
+rm temp_res.txt
+c_ret=0
+c_ret=$(brute) 
+rm temp_res.txt
+echo "Done - total: $c_ret"
 ;;
 
 
@@ -92,7 +99,7 @@ done
 
 ##### help
 "-h" | "-?" | "--help" )
-echo "ver 0.1a"
+echo "ver 0.1b"
 echo "scan" 
 echo "brute"
 echo 'rec - rec ip  ex. kikka rec 127.0.0.1 '
