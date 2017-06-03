@@ -81,7 +81,6 @@ scan 80 temp_res.txt
 rm temp_res.txt
 c_ret=0
 c_ret=$(brute) 
-rm temp_res.txt
 echo "Done - total: $c_ret"
 ;;
 
